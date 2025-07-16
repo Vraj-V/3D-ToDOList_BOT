@@ -33,7 +33,7 @@ input[type="text"] {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 1.2rem;
-  color: #333;
+  color: #fff;
   outline: none;
   transition: border-color 0.3s ease;
   width: 60%;
