@@ -1,0 +1,151 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.to-do-list {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  border-radius: 5px;
+
+  border: 2px solid #4CAF50;
+}
+.to-do-list:hover{
+  outline: none;
+  box-shadow: 0 0 10px #4CAF50;
+}
+
+input[type="text"] {
+  padding: 10px;
+  margin: 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 60%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+li {
+  list-style: none;
+  font-size: 1.7rem;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #333;
+  transition: background-color 0.3s ease;
+  border: 1px solid #4CAF50;
+  display: flex;
+  align-items: center;
+  &:hover {
+box-shadow: 5px 0px 10px #4CAF50;
+  }
+}
+.text{
+  flex: 1;
+  text-align: left;
+  margin-right: 20px;
+}
+
+ul {
+  padding:0;
+  margin: 10px 0;
+}
+span{
+  margin-right: 30px;
+}
+h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+button{
+  font-size: 1.5rem;
+  padding: 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+.add-button{
+  background-color: #288d2b;
+  color: white;
+  padding: 10px 15px ;
+  transition: all 0.3s ease;
+  &:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00ff55aa;  }
+
+}
+
+.delete-button{
+  background-color: #ec594e;
+  color: white;
+  padding: 5px;
+  transition: all 0.25s ease;
+  &:hover {
+    background-color: #c62b1f;
+  }
+}
+
+.move-button{
+  background-color: #4ea5ec;
+  color: white;
+  padding: 5px;
+  transition: all 0.25s ease;
+  &:hover {
+    background-color: #285fc6;
+  }
+}
+
+.delete-button,.move-button{
+  padding: 8px 12px;
+  font-size: 1.2rem;
+  margin-right:10px;
+
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .to-do-list {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  input {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .spline-container {
+    height: 50vh; /* or even 40vh */
+  }
+}
