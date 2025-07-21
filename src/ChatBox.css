@@ -25,6 +25,17 @@
   flex-direction: column;
   overflow: hidden;
 }
+.chat-messages::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+.chat-messages {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 
 .chat-header {
   background: #25d366;
@@ -44,21 +55,140 @@
   cursor: pointer;
 }
 
+
 .chat-messages {
-  padding: 10px;
-  height: 200px;
+  padding: 18px 16px 10px 16px;
+  height: 220px;
   overflow-y: auto;
-  font-size: 14px;
+  font-size: 15px;
+  background: var(--chat-msg-bg, #f9f9f9);
+  transition: background 0.3s;
 }
 
+/* Modern chatbox and dark mode support */
 .chat-msg.user {
   text-align: right;
-  color: #000;
+  color: var(--chat-user-color, #fff);
+  background: linear-gradient(135deg, #25d366 60%, #43e97b 100%);
+  padding: 8px 14px;
+  border-radius: 16px 16px 4px 16px;
+  margin: 8px 0 8px 60px;
+  display: inline-block;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.08);
 }
-
 .chat-msg.bot {
   text-align: left;
-  color: #007bff;
+  color: var(--chat-bot-color, #222);
+  background: linear-gradient(135deg, #e0e0e0 60%, #f4f4f4 100%);
+  padding: 8px 14px;
+  border-radius: 16px 16px 16px 4px;
+  margin: 8px 60px 8px 0;
+  display: inline-block;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(60, 60, 60, 0.06);
+  white-space: pre-line;
+}
+
+.chatbox {
+  width: 340px;
+  background: var(--chat-bg, #f4f4f4);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(60, 60, 60, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1.5px solid var(--chat-border, #e0e0e0);
+  transition: background 0.3s, border 0.3s;
+}
+.chat-header {
+  background: var(--chat-header-bg, #25d366);
+  color: var(--chat-header-color, #fff);
+  padding: 16px 18px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--chat-border, #e0e0e0);
+}
+.chat-input {
+  display: flex;
+  border-top: 1px solid var(--chat-border, #e0e0e0);
+  background: var(--chat-input-bg, #f4f4f4);
+  padding: 8px 10px;
+}
+.chat-input input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1.5px solid var(--chat-border, #e0e0e0);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--chat-input-color, #222);
+  background: var(--chat-input-bg, #fff);
+  outline: none;
+  margin-right: 8px;
+  transition: border 0.2s, background 0.2s;
+}
+.chat-input input:focus {
+  border: 1.5px solid #25d366;
+  background: #f6fff8;
+}
+.chat-input button {
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #25d366 60%, #43e97b 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.08);
+  transition: background 0.2s;
+}
+.chat-input button:hover {
+  background: linear-gradient(135deg, #43e97b 60%, #25d366 100%);
+}
+
+body.dark .chatbox {
+  --chat-bg: #181c1f;
+  --chat-border: #22272b;
+}
+body.dark .chat-header {
+  --chat-header-bg: #23272b;
+  --chat-header-color: #25d366;
+}
+body.dark .chat-messages {
+  --chat-msg-bg: #1a1e21;
+}
+body.dark .chat-msg.user {
+  --chat-user-color: #fff;
+  background: linear-gradient(135deg, #25d366 60%, #1a7f4c 100%);
+  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.13);
+}
+body.dark .chat-msg.bot {
+  --chat-bot-color: #e0e0e0;
+  background: linear-gradient(135deg, #23272b 60%, #181c1f 100%);
+  box-shadow: 0 2px 8px rgba(60, 60, 60, 0.13);
+}
+body.dark .chat-input {
+  --chat-input-bg: #181c1f;
+}
+body.dark .chat-input input {
+  --chat-input-color: #e0e0e0;
+  --chat-input-bg: #23272b;
+  border: 1.5px solid #23272b;
+}
+body.dark .chat-input input:focus {
+  background: #23272b;
+  border: 1.5px solid #25d366;
+}
+body.dark .chat-input button {
+  background: linear-gradient(135deg, #25d366 60%, #1a7f4c 100%);
+}
+body.dark .chat-input button:hover {
+  background: linear-gradient(135deg, #1a7f4c 60%, #25d366 100%);
 }
 
 .chat-input {
