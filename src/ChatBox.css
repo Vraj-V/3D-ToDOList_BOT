@@ -67,15 +67,22 @@
 
 /* Modern chatbox and dark mode support */
 .chat-msg.user {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin: 8px 0 8px 0;
+}
+.chat-msg.user .user-bubble {
   color: var(--chat-user-color, #fff);
   background: linear-gradient(135deg, #25d366 60%, #43e97b 100%);
   padding: 8px 14px;
   border-radius: 16px 16px 4px 16px;
-  margin: 8px 0 8px 60px;
-  display: inline-block;
   font-weight: 500;
   box-shadow: 0 2px 8px rgba(60, 200, 120, 0.08);
+  max-width: 80%;
+  text-align: right;
+  word-break: break-word;
+  display: inline-block;
 }
 .chat-msg.bot {
   text-align: left;
@@ -164,8 +171,8 @@ body.dark .chat-messages {
 }
 body.dark .chat-msg.user {
   --chat-user-color: #fff;
-  background: linear-gradient(135deg, #25d366 60%, #1a7f4c 100%);
-  box-shadow: 0 2px 8px rgba(60, 200, 120, 0.13);
+  /* background: linear-gradient(135deg, #25d366 60%, #1a7f4c 100%); */
+  /* box-shadow: 0 2px 8px rgba(60, 200, 120, 0.13); */
 }
 body.dark .chat-msg.bot {
   --chat-bot-color: #e0e0e0;

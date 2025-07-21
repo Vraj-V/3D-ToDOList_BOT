@@ -27,7 +27,7 @@
     width: 180px !important;
     height: 220px !important;
     z-index: 0 !important;
-    pointer-events: none !important;
+  background: #000 !important;
     display: block !important;
   }
   .to-do-list {
@@ -45,7 +45,7 @@
     font-size: 1rem !important;
     background: #1e1e1e !important;
     color: #fff !important;
-    box-shadow: 0 2px 8px #8f00ff33 !important;
+  background: #000 !important;
     z-index: 2 !important;
     animation: none !important;
   }

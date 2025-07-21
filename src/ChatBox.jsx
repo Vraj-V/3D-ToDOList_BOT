@@ -15,7 +15,7 @@ function ChatBox({ onSend }) {
     const trimmed = input.trim();
     if (/^add\s+/i.test(trimmed)) {
       return `✅ Task added: "${trimmed.replace(/^add\s+/i, '')}"`;
-    } else if (/^delete\s+/i.test(trimmed)) {
+    } else if (/^(delete|remove)\s+/i.test(trimmed)) {
       return `🗑️ Task deleted (if found).`;
     } else if (/^edit\s+/i.test(trimmed)) {
       return `✏️ Task edited (if found).`;
@@ -27,17 +27,51 @@ function ChatBox({ onSend }) {
   };
 
   const handleSend = () => {
-    if (chatInput.trim() === "") return;
+    const value = chatInput.trim();
+    if (value === "") return;
 
-    const newMessages = [...messages, { from: "user", text: chatInput }];
-    setMessages(newMessages);
+    // Check for date in input (e.g., add task date:7/24/2025)
+    // Accepts formats like: add task date:7/24/2025 or add task date: 2025-07-24
+    const dateMatch = value.match(/date\s*[:=\-]\s*([\d\/-]+)/i);
+    let dateValue = null;
+    let cleanValue = value;
+    if (dateMatch) {
+      dateValue = dateMatch[1];
+      cleanValue = value.replace(/date\s*[:=\-]\s*[\d\/-]+/i, '').replace(/\s{2,}/g, ' ').trim();
+    }
 
-    const botReply = { from: "bot", text: getBotReply(chatInput) };
-    const updatedMessages = [...newMessages, botReply];
+    // If it's an add command and no date is provided, show alert and do not send
+    if (/^add\s+/i.test(value) && !dateValue) {
+      alert('⚠️ Please provide a date using date:MM/DD/YYYY or date:YYYY-MM-DD');
+      return;
+    }
 
-    setMessages(updatedMessages);
-    if (onSend) onSend(chatInput);
-
+    // Use functional update to avoid blocking UI
+    setMessages((prev) => {
+      const newMessages = [...prev, { from: "user", text: value }];
+      const botReply = { from: "bot", text: getBotReply(value) };
+      return [...newMessages, botReply];
+    });
+    if (onSend) {
+      if (dateValue) {
+        onSend({ text: cleanValue, date: dateValue });
+      } else if (/^(delete|remove)\s+/i.test(value)) {
+        onSend(value); // Only send as delete/remove command
+      } else if (/^add\s+/i.test(value)) {
+        onSend(value); // Only send as add command
+      } else if (/^edit\s+/i.test(value)) {
+        onSend(value); // Only send as edit command
+      } else if (/^complete\s+/i.test(value)) {
+        onSend(value); // Only send as complete command
+      } else if (/^(delete|remove)\b/i.test(value)) {
+        onSend(value); // Only send as delete/remove command (catch any missed cases)
+      } else {
+        // Only treat as add if it does NOT start with delete/remove
+        if (!/^(delete|remove)\b/i.test(value)) {
+          onSend(value); // Fallback, treat as add
+        }
+      }
+    }
     setChatInput("");
   };
 
@@ -58,9 +92,11 @@ function ChatBox({ onSend }) {
 
           <div className="chat-messages">
             {messages.map((msg, index) => (
-              <div key={index} className={`chat-msg ${msg.from}`}>
-                {msg.text}
-              </div>
+              msg.from === 'user' ? (
+                <div key={index} className="chat-msg user"><span className="user-bubble">{msg.text}</span></div>
+              ) : (
+                <div key={index} className={`chat-msg ${msg.from}`}>{msg.text}</div>
+              )
             ))}
           </div>
 
@@ -68,9 +104,15 @@ function ChatBox({ onSend }) {
             <input
               type="text"
               value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
+              onChange={e => {
+                // Use requestAnimationFrame to avoid blocking UI
+                const value = e.target.value;
+                window.requestAnimationFrame(() => setChatInput(value));
+              }}
               placeholder="Type a task..."
-              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+              onKeyDown={e => {
+                if (e.key === "Enter") handleSend();
+              }}
               style={{ color: '#222', background: '#fff' }}
             />
             <button onClick={handleSend}>Send</button>
