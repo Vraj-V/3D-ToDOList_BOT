@@ -381,7 +381,7 @@ color: isDarkMode ? '#ff00ff' : 'goldenrod',
                 <li key={`done-${index}`} className='completed'>
                   <span>{task.text}</span>
                   <span className='completion-status'>
-                    {task.completedOnTime ? '🎉 On Time' : '⏰ Late'}
+                    {task.completedOnTime ? '🎉 On Time' : '⏰ Today'}
                   </span>
                 </li>
               ))}
