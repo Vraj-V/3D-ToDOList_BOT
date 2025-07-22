@@ -26,8 +26,8 @@
     bottom: 0 !important;
     width: 180px !important;
     height: 220px !important;
-    z-index: 0 !important;
-  background: #000 !important;
+      z-index: 0 !important;
+    background: #000 !important;
     display: block !important;
   }
   .to-do-list {

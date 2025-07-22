@@ -29,48 +29,13 @@ function ChatBox({ onSend }) {
   const handleSend = () => {
     const value = chatInput.trim();
     if (value === "") return;
-
-    // Check for date in input (e.g., add task date:7/24/2025)
-    // Accepts formats like: add task date:7/24/2025 or add task date: 2025-07-24
-    const dateMatch = value.match(/date\s*[:=\-]\s*([\d\/-]+)/i);
-    let dateValue = null;
-    let cleanValue = value;
-    if (dateMatch) {
-      dateValue = dateMatch[1];
-      cleanValue = value.replace(/date\s*[:=\-]\s*[\d\/-]+/i, '').replace(/\s{2,}/g, ' ').trim();
-    }
-
-    // If it's an add command and no date is provided, show alert and do not send
-    if (/^add\s+/i.test(value) && !dateValue) {
-      alert('⚠️ Please provide a date using date:MM/DD/YYYY or date:YYYY-MM-DD');
-      return;
-    }
-
-    // Use functional update to avoid blocking UI
     setMessages((prev) => {
       const newMessages = [...prev, { from: "user", text: value }];
       const botReply = { from: "bot", text: getBotReply(value) };
       return [...newMessages, botReply];
     });
     if (onSend) {
-      if (dateValue) {
-        onSend({ text: cleanValue, date: dateValue });
-      } else if (/^(delete|remove)\s+/i.test(value)) {
-        onSend(value); // Only send as delete/remove command
-      } else if (/^add\s+/i.test(value)) {
-        onSend(value); // Only send as add command
-      } else if (/^edit\s+/i.test(value)) {
-        onSend(value); // Only send as edit command
-      } else if (/^complete\s+/i.test(value)) {
-        onSend(value); // Only send as complete command
-      } else if (/^(delete|remove)\b/i.test(value)) {
-        onSend(value); // Only send as delete/remove command (catch any missed cases)
-      } else {
-        // Only treat as add if it does NOT start with delete/remove
-        if (!/^(delete|remove)\b/i.test(value)) {
-          onSend(value); // Fallback, treat as add
-        }
-      }
+      onSend(value);
     }
     setChatInput("");
   };

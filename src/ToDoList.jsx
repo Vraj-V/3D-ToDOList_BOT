@@ -145,7 +145,7 @@ function ToDOList({ externalTask }) {
           }
         });
       } else {
-        // Default: add as new task
+        // Default: add as new task with current date as dueDate
         const taskObj = {
           text: externalTask,
           dueDate: new Date().toISOString(),
@@ -236,7 +236,7 @@ function ToDOList({ externalTask }) {
     const now = new Date();
     const due = new Date(dueDate);
     const diff = due - now;
-    if (diff <= 0) return '⏰ Overdue';
+    if (diff <= 0) return '⏰ Today';
 
     const hours = Math.floor(diff / (1000 * 60 * 60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
